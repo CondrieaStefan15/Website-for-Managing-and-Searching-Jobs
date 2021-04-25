@@ -1,0 +1,366 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Meserii</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+    
+    <link rel="stylesheet" type="text/css" href="../static/css/styleCSS.css" th:href="@{/css/styleCSS.css}"/>
+    
+    <style>
+    
+    
+        table {
+		    font-family: arial, sans-serif;
+		    border-collapse: collapse;
+		}
+		
+		td, th {
+		    border: 1px solid #dddddd;
+		    text-align: left;
+		    padding: 8px;
+		}
+		
+		tr:nth-child(even) {
+		    background-color: #dddddd;
+		}
+
+		#insertMeserie{
+			visibility: hidden;
+		}
+		#deleteMeserie{
+			visibility: hidden;
+		}
+    
+    </style>
+    
+
+		
+
+</head>
+
+<body>
+	<div class="container1111">
+ 		 <span class="text1">EJOBS</span>
+ 		 <span class="text2">Meserii oferte</span>
+	</div>
+  	<div class="container2222">
+  	<section>
+            <ul>
+                <li><a class="active" href = "index">Home</a></li>	
+				<li><a href = "domenii">Domenii</a></li>
+				<li><a href = "firme">Firme</a></li>
+				<li><a href = "locatii">Locatii</a></li>
+				<li><a href = "meserii">Meserii</a></li>
+				<li><a href = "cos_meserii">Cos Meserii</a></li>
+            </ul>
+        
+    </section>
+    </div>
+
+  
+	<table class="center">
+		<thead>
+			<tr>
+				<th>id_meserie</th>
+				<th>nume_meserie</th>
+				<th>tip_meserie</th>
+				<th>salariu</th>
+				<th>nivel_studii</th>
+				<th>particularitati</th>
+				<th>Firma</th>
+				<th>Locatie</th>
+				<th>id_firma</th>
+				<th>id_locatie</th>
+				
+			</tr>
+		</thead> 
+		<tbody>
+			<tr th:each="meserie: ${listaMeserii}">
+				<td th:text="${meserie.getIdMeserie()}"></td>
+				<td th:text="${meserie.getNumeMeserie()}"></td>
+				<td th:text="${meserie.getTipMeserie()}"></td>
+				<td th:text="${meserie.getSalariu()}"></td>
+				<td th:text="${meserie.getNivelStudii()}"></td>
+				<td th:text="${meserie.getParticularitati()}"></td>
+				<td th:text="${meserie.getMeseriiNumeFirma()}"></td>
+				<td th:text="${meserie.getMeseriiLocatie()}"></td>
+				<td th:text="${meserie.getIdFirma()}"></td>
+				<td th:text="${meserie.getIdLocatie()}"></td>
+				
+			</tr>
+		</tbody>
+	
+	</table>
+	<!--===============================================================INSERARE----------=================================================-->
+
+	<button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Inserează o meserie</button>
+     
+     <div id="id01" class="modal">
+  
+		<form class="modal-content animate" action="/insertMeserie" method="post">
+			<div class="imgcontainer">
+			  <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+			  <img src="../img/meserii-inserare.jpg" alt="Avatar" class="avatar"/>
+			</div>
+		
+			<div class="container">
+
+		      <label><b>Numele meseriei</b></label>
+			  <input type="text" placeholder="Introduceți numele meseriei" name="numeMeserie" required="required"/>
+			  
+			  <br/>
+			  <label><b>Tipul meseriei</b></label>
+			  <select name="tipMeserie">
+			  	<option th:each="tipMeserie: ${tipuriMeserii}"
+			  			th:value="${tipMeserie}"
+			  			th:text="${tipMeserie}">
+			  	</option>
+			  </select>
+
+			  <br/>
+			  <label><b>Salariul</b></label>
+			  <input type="text" placeholder="Introduceți salariul oferit(optional)" name="salariu"/>
+			  
+			  
+				
+			 <br/>
+			 <label><b>Nivel Studii</b></label>
+			 <input type="text" placeholder="Introduceți nivelul de studii(optional)" name="nivelStudii"/>
+			    
+			  <br/>
+			  <label><b>Alegeți Firma</b></label>
+			  <select name="numeFirma">
+			  	<option th:each="numeFirma: ${listaFirme}"
+			  			th:value="${numeFirma.getIdFirma()}"
+			  			th:text="${numeFirma.getNumeFirma()}">
+			    </option>
+			  </select>
+			  <br/>
+			  <br/>
+			  <label><b>Locatia Meseriei</b></label>
+				 <select name="numeLocatie">
+				  	<option th:each="numeLocatie: ${listaLocatii}"
+				  			th:value="${numeLocatie.getIdLocatie()}"
+				  			th:text="${numeLocatie.getJudet() + ', ' + numeLocatie.getNumeLocatie() + ', ' + numeLocatie.getAdresa()}">
+				  </option>
+			  	</select>
+
+			  <br/>
+			  <label><b>Alte optiuni</b></label>
+			  <input type="text" placeholder="Introduceți alte optiuni(optional)" name="particularitati"/>
+
+			  <button type="submit">Inserează</button>
+			</div>
+
+		  </form>
+	</div>
+
+	<!--===============================================================DELETE----------=================================================-->
+
+<button onclick="document.getElementById('id02').style.display='block'" style="width:auto;">Sterge o meserie</button>
+     
+     <div id="id02" class="modal2">
+  
+		<form class="modal-content animate" action="/deleteMeserie">
+			<div class="imgcontainer">
+			  <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
+			  <img src="../img/meserii-inserare.jpg" alt="Avatar" class="avatar"/>
+			</div>
+		
+			<div class="container">
+
+		      <label><b>Id Meserie</b></label>
+			  <input type="text" placeholder="Introduceți id ul meseriei ce o doriti stearsa" name="idMeserie" required="required"/>
+			  
+			  <br/>
+			  <button type="submit">Sterge</button>
+			</div>
+
+		  </form>
+	</div>
+
+
+	<!--=============================================================UPDATE==================================================================-->
+
+
+	<button onclick="document.getElementById('id03').style.display='block'" style="width:auto;">Edit Meserie</button>
+     
+     <div id="id03" class="modal3">
+  
+		<form class="modal-content animate" action="/updateMeserie" method="get">
+			<div class="imgcontainer">
+			  <span onclick="document.getElementById('id03').style.display='none'" class="close" title="Close Modal">&times;</span>
+			  <img src="../img/meserii-inserare.jpg" alt="Avatar" class="avatar"/>
+			</div>
+		
+			<div class="container">
+
+		      <label><b>Id Meserie</b></label>
+			  <input type="text" placeholder="Introduceți id-ul meseriei pe care o doriti a o modifica" name="idMeserie" required="required"/>	
+			  			
+			  <label><b><center><h2>Noile date pentru meserie</h2></center></b></label>			
+		      <label><b>Numele meseriei</b></label>
+			  <input type="text" placeholder="Introduceți numele meseriei" name="numeMeserie" required="required"/>
+			  
+			  <br/>
+			  <label><b>Tipul meseriei</b></label>
+			  <select name="tipMeserie">
+			  	<option th:each="tipMeserie: ${tipuriMeserii}"
+			  			th:value="${tipMeserie}"
+			  			th:text="${tipMeserie}">
+			  	</option>
+			  </select>
+
+			  <br/>
+			  <label><b>Salariul</b></label>
+			  <input type="text" placeholder="Introduceți salariul oferit(optional)" name="salariu"/>
+			  
+			  
+				
+			 <br/>
+			 <label><b>Nivel Studii</b></label>
+			 <input type="text" placeholder="Introduceți nivelul de studii(optional)" name="nivelStudii"/>
+			    
+			  <br/>
+			  <label><b>Alegeți Firma</b></label>
+			  <select name="numeFirma">
+			  	<option th:each="numeFirma: ${listaFirme}"
+			  			th:value="${numeFirma.getIdFirma()}"
+			  			th:text="${numeFirma.getNumeFirma()}">
+			    </option>
+			  </select>
+			  
+			  <br/>
+			  <label><b>Locatia Meseriei</b></label>
+				 <select name="numeLocatie">
+				  	<option th:each="numeLocatie: ${listaLocatii}"
+				  			th:value="${numeLocatie.getIdLocatie()}"
+				  			th:text="${numeLocatie.getJudet() + ', ' + numeLocatie.getNumeLocatie() + ', ' + numeLocatie.getAdresa()}">
+				  </option>
+			  	</select>
+
+			  <br/>
+			  <label><b>Alte optiuni</b></label>
+			  <input type="text" placeholder="Introduceți alte optiuni(optional)" name="particularitati"/>
+
+			  <button type="submit">Update</button>
+			</div>
+
+		  </form>
+	</div>
+
+	<!--=================================================================AFISARE MESERII DUPA un criteriu=============================================-->
+
+	<!--==============================================================Afisare meseria cu salariul maxim/minim dintr-un judet==============================-->
+
+
+	<!--                             =======================================Search in particularitati dupa un cuvant dat=========================-->
+
+
+
+	<!--==============================================================Introducere meserie in cos meserii=================================================-->
+			<button onclick="document.getElementById('id07').style.display='block'" style="width:auto;">Introduceti meserie in "cos"</button>
+     
+     <div id="id07" class="modal7">
+  
+		<form class="modal-content animate" action="/insertInCosMeserii" method="post">
+			<div class="imgcontainer">
+			  <span onclick="document.getElementById('id07').style.display='none'" class="close" title="Close Modal">&times;</span>
+			  <img src="../img/meserii-inserare.jpg" alt="Avatar" class="avatar"/>
+			</div>
+		
+			<div class="container">
+
+		      <label><b>Introduceti id ul meseriei ce o doriti a adauga in cos</b></label>
+			  <input type="text" placeholder="Id meserie" name="idMeserie" required="required"/>
+			  
+			  <br/>
+			  <button type="submit">Adauga</button>
+			</div>
+
+		  </form>
+	</div>
+
+	<!--==================================================================Afisare meseriile dupa un anumit domeniu dat=======================-->
+
+	<button onclick="document.getElementById('id08').style.display='block'" style="width:auto;">Afisare meserii dupa un domeniiu</button>
+     
+     <div id="id08" class="modal8">
+  
+		<form class="modal-content animate" action="/afisareMeseriiDinDomeniu" method="post">
+			<div class="imgcontainer">
+			  <span onclick="document.getElementById('id08').style.display='none'" class="close" title="Close Modal">&times;</span>
+			  <img src="../img/meserii-inserare.jpg" alt="Avatar" class="avatar"/>
+			</div>
+		
+			<div class="container">
+
+		      <br/>
+			  <label><b>Domeniul</b></label>
+			  <select name="numeDomeniu">
+			  	<option th:each="numeDomeniu: ${listaDomenii}"
+			  			th:value="${numeDomeniu.getIdDomeniu()}"
+			  			th:text="${numeDomeniu.getNumeDomeniu()}">
+			  	</option>
+			  </select>
+			  
+			  <br/>
+			  <button type="submit">Afisare</button>
+			</div>
+
+		  </form>
+	</div>
+
+
+
+  
+    <script type="text/javascript">
+	  	
+	  	
+	 	// Get the modal
+		var modal = document.getElementById('id01');
+		
+		// When the user clicks anywhere outside of the modal, close it
+		window.onclick = function(event) {
+		    if (event.target == modal) {
+		        modal.style.display = "none";
+		    }
+		}
+
+		var modal2 = document.getElementById('id02');
+		
+		// When the user clicks anywhere outside of the modal, close it
+		window.onclick = function(event) {
+		    if (event.target == modal2) {
+		        modal2.style.display = "none";
+		    }
+		}
+
+		var modal3 = document.getElementById('id03');
+		
+		// When the user clicks anywhere outside of the modal, close it
+		window.onclick = function(event) {
+		    if (event.target == modal3) {
+		        modal3.style.display = "none";
+		    }
+		}
+
+		var modal7 = document.getElementById('id07');
+		
+		// When the user clicks anywhere outside of the modal, close it
+		window.onclick = function(event) {
+		    if (event.target == modal7) {
+		        modal7.style.display = "none";
+		    }
+		}
+  
+  
+  </script>
+  
+
+  
+  
+</body>
+
+</html>
