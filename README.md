@@ -11,3 +11,5 @@ The main functionalities are:
 - searching for a specific keyword in the job description
 - displaying jobs in a specific field of work
 - selection of jobs that arouse the user's interest
+
+Technologies used: Eclipse, SQL Developer, Spring Boot, Java, SQL, PL/SQL, Oracle Database, CSS, HTML
