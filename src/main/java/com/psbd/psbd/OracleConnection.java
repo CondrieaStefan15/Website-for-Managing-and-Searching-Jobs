@@ -9,7 +9,7 @@ public class OracleConnection {
 	private static final String DB_DRIVER = "oracle.jdbc.driver.OracleDriver";
 	private static final String DB_CONNECTION = "jdbc:oracle:thin:@localhost:1521:xe";
 	private static final String DB_USER = "PSBD";
-	private static final String DB_PASSWORD = "15121997";
+	private static final String DB_PASSWORD = "";
 	
 	//create connection with database
 	public static Connection getDBConnection()
