@@ -1,0 +1,225 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Meserii</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+    
+    <link rel="stylesheet" type="text/css" href="../static/css/styleCSS.css" th:href="@{/css/styleCSS.css}"/>
+    
+    <style>
+    
+    
+        table {
+		    font-family: arial, sans-serif;
+		    border-collapse: collapse;
+		}
+		
+		td, th {
+		    border: 1px solid #dddddd;
+		    text-align: left;
+		    padding: 8px;
+		}
+		
+		tr:nth-child(even) {
+		    background-color: #dddddd;
+		}
+
+		#insertMeserie{
+			visibility: hidden;
+		}
+		#deleteMeserie{
+			visibility: hidden;
+		}
+    
+    </style>
+    
+
+		
+
+</head>
+
+<body>
+	<div class="container1111">
+ 		 <span class="text1">EJOBS</span>
+ 		 <span class="text2">Meseriile care v-au starnit un interes</span>
+	</div>
+  	<div class="container2222">
+  	<section>
+            <ul>
+                <li><a class="active" href = "index">Home</a></li>	
+				<li><a href = "domenii">Domenii</a></li>
+				<li><a href = "firme">Firme</a></li>
+				<li><a href = "locatii">Locatii</a></li>
+				<li><a href = "meserii">Meserii</a></li>
+				<li><a href = "cos_meserii">Cos Meserii</a></li>
+            </ul>
+        
+    </section>
+    </div>
+
+  
+	<table class="center">
+		<thead>
+			<tr>
+				<th>id_meserie</th>
+				<th>nume_meserie</th>
+				<th>tip_meserie</th>
+				<th>salariu</th>
+				<th>nivel_studii</th>
+				<th>particularitati</th>
+				<th>Firma</th>
+				<th>Locatie</th>
+				<th>id_firma</th>
+				<th>id_locatie</th>
+				
+			</tr>
+		</thead> 
+		<tbody>
+			<tr th:each="meserie: ${listaCosMeserii}">
+				<td th:text="${meserie.getIdMeserie()}"></td>
+				<td th:text="${meserie.getNumeMeserie()}"></td>
+				<td th:text="${meserie.getTipMeserie()}"></td>
+				<td th:text="${meserie.getSalariu()}"></td>
+				<td th:text="${meserie.getNivelStudii()}"></td>
+				<td th:text="${meserie.getParticularitati()}"></td>
+				<td th:text="${meserie.getMeseriiNumeFirma()}"></td>
+				<td th:text="${meserie.getMeseriiLocatie()}"></td>
+				<td th:text="${meserie.getIdFirma()}"></td>
+				<td th:text="${meserie.getIdLocatie()}"></td>
+				
+			</tr>
+		</tbody>
+	
+	</table>
+
+
+
+
+
+
+
+	<br/>
+	<h2><center>Datele de contact a firmelor pentru meseriile introduse in cos</center></h2>
+	<h4><center>(corespondenta se face dupa id_firma)</center></h4>
+	<br/>
+	<table class="center">
+		<thead>
+			<tr>
+				<th>id_firma</th>
+				<th>nume_firma</th>
+				<th>numar_telefon</th>
+				<th>email</th>
+				<th>nume domeniu</th>
+				<th>id_domeniu</th>
+				
+			</tr>
+		</thead> 
+		<tbody>
+			<tr th:each="firma: ${listaContacteFirmePentruCos}">
+				<td th:text="${firma.getIdFirma()}"></td>
+				<td th:text="${firma.getNumeFirma()}"></td>
+				<td th:text="${firma.getNumarTelefon()}"></td>
+				<td th:text="${firma.getEmail()}"></td>
+				<td th:text="${firma.getFirmeNumeDomeniu()}"></td>
+				<td th:text="${firma.getIdDomeniu()}"></td>
+			</tr>
+		</tbody>
+	
+	</table>
+
+
+
+		<br/>
+	<h2><center>Locatiile meseriilor introduse in cos</center></h2>
+	<h4><center>(corespondenta se face dupa id_locatie)</center></h4>
+	<br/>
+	<table class="center">
+		<thead>
+			<tr>
+				<th>id_locatie</th>
+				<th>judet</th>
+				<th>nume_locatie</th>
+				<th>adresa</th>				
+			</tr>
+		</thead> 
+		<tbody>
+			<tr th:each="locatie: ${listaLocatiiPentruMeseriiCos}">
+				<td th:text="${locatie.getIdLocatie()}"></td>
+				<td th:text="${locatie.getJudet()}"></td>
+				<td th:text="${locatie.getNumeLocatie()}"></td>
+				<td th:text="${locatie.getAdresa()}"></td>
+			</tr>
+		</tbody>
+	
+	</table>
+	<!--===============================================================INSERARE----------=================================================-->
+
+	
+
+	<!--===============================================================DELETE----------=================================================-->
+
+<button onclick="document.getElementById('id02').style.display='block'" style="width:auto;">Sterge din cos </button>
+     
+     <div id="id02" class="modal2">
+  
+		<form class="modal-content animate" action="/deleteMeserieDinCos">
+			<div class="imgcontainer">
+			  <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
+			  <img src="../img/meserii-inserare.jpg" alt="Avatar" class="avatar"/>
+			</div>
+		
+			<div class="container">
+
+		      <label><b>Id Meserie</b></label>
+			  <input type="text" placeholder="Introduceți id ul meseriei ce o doriti stearsa" name="idMeserie" required="required"/>
+			  
+			  <br/>
+			  <button type="submit">Sterge</button>
+			</div>
+
+		  </form>
+	</div>
+
+
+	<!--=============================================================UPDATE==================================================================-->
+
+
+	
+	<!--=================================================================AFISARE MESERII DUPA un criteriu=============================================-->
+
+
+
+	<!--==============================================================Afisare meseria cu salariul maxim dintr-un anumit domeniu==============================-->
+
+
+	<!--                             =======================================Search in particularitati dupa un cuvant dat=========================-->
+
+
+
+
+  
+    <script type="text/javascript">
+	  	
+	  	
+
+		var modal2 = document.getElementById('id02');
+		
+		// When the user clicks anywhere outside of the modal, close it
+		window.onclick = function(event) {
+		    if (event.target == modal2) {
+		        modal2.style.display = "none";
+		    }
+		}
+
+
+
+  
+  </script>
+  
+
+  
+  
+</body>
+
+</html>
